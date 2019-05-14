@@ -3,4 +3,4 @@ type: module
 description: Optimize images using the Kraken.io webservice
 core: 8.x
 dependencies:
-  - imageapi_optimize
+  - imageapi_optimize:imageapi_optimize
