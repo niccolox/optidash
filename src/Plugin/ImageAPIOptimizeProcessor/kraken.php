@@ -156,7 +156,7 @@ class kraken extends ConfigurableImageAPIOptimizeProcessorBase {
           try {
             $krakedFile = $this->httpClient->get($data['kraked_url']);
             if ($krakedFile->getStatusCode() == 200) {
-              \Drupal::service('file_system')->saveData($krakedFile->getBody(), $image_uri, FileSystemInterface::EXISTS_REPLACE);
+              $this->fileSystem->saveData($krakedFile->getBody(), $image_uri, FileSystemInterface::EXISTS_REPLACE);
               $this->logger->info('@file_name was successfully processed by Kraken.io.
         Original size: @original_size; Kraked size: @kraked_size; Total saved:
         @saved_bytes. All figures in bytes', array(
