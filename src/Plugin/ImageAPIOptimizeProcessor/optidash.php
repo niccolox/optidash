@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\kraken\Plugin\ImageAPIOptimizeProcessor;
+namespace Drupal\optidash\Plugin\ImageAPIOptimizeProcessor;
 
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -12,15 +12,15 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Optimize images using the Kraken.io webservice.
+ * Optimize images using the Optidash.ai webservice.
  *
  * @ImageAPIOptimizeProcessor(
- *   id = "kraken",
- *   label = @Translation("Kraken.io"),
- *   description = @Translation("Optimize images using the Kraken.io webservice.")
+ *   id = "optidash",
+ *   label = @Translation("optidash.ai"),
+ *   description = @Translation("Optimize images using the optidash.ai webservice.")
  * )
  */
-class kraken extends ConfigurableImageAPIOptimizeProcessorBase {
+class optidash extends ConfigurableImageAPIOptimizeProcessorBase {
 
   /**
    * The file system service.
@@ -67,7 +67,6 @@ class kraken extends ConfigurableImageAPIOptimizeProcessorBase {
   public function defaultConfiguration() {
     return [
       'api_key' => NULL,
-      'api_secret' => NULL,
       'lossy' => TRUE,
     ];
   }
@@ -81,13 +80,6 @@ class kraken extends ConfigurableImageAPIOptimizeProcessorBase {
       '#type' => 'textfield',
       '#required' => TRUE,
       '#default_value' => $this->configuration['api_key'],
-    );
-
-    $form['api_secret'] = array(
-      '#title' => t('API Secret'),
-      '#type' => 'textfield',
-      '#required' => TRUE,
-      '#default_value' => $this->configuration['api_secret'],
     );
 
     $form['lossy'] = array(
@@ -105,7 +97,6 @@ class kraken extends ConfigurableImageAPIOptimizeProcessorBase {
     parent::submitConfigurationForm($form, $form_state);
 
     $this->configuration['api_key'] = $form_state->getValue('api_key');
-    $this->configuration['api_secret'] = $form_state->getValue('api_secret');
     $this->configuration['lossy'] = $form_state->getValue('lossy');
   }
 
@@ -115,8 +106,8 @@ class kraken extends ConfigurableImageAPIOptimizeProcessorBase {
   public function getSummary() {
     $description = '';
 
-    if (!class_exists('\Kraken')) {
-      $description .= $this->t('<strong>Could not locate Kraken PHP library.</strong>');
+    if (!class_exists('\Optidash')) {
+      $description .= $this->t('<strong>Very Sorry, Could not locate Optidash PHP library.</strong>');
     }
     else {
       if ($this->configuration['lossy']) {
@@ -139,49 +130,49 @@ class kraken extends ConfigurableImageAPIOptimizeProcessorBase {
    * {@inheritdoc}
    */
   public function applyToImage($image_uri) {
-
-    if (class_exists('\Kraken')) {
+    
+    if (class_exists('\Optidash')) {
       if (!empty($this->configuration['api_key']) && !empty($this->configuration['api_secret'])) {
-        $kraken = new \Kraken($this->configuration['api_key'], $this->configuration['api_secret']);
+        $optidash = new \Optidash($this->configuration['api_key']);
         $params = array(
           'file' => $this->fileSystem->realpath($image_uri),
           'wait' => TRUE,
           'lossy' => (bool) $this->configuration['lossy'],
         );
 
-        // Send the request to Kraken.
-        $data = $kraken->upload($params);
+        // Send the request to Optidash.
+        $data = $optidash->upload($params);
 
-        if (!empty($data['success']) && !empty($data['kraked_url'])) {
+        if (!empty($data['success']) && !empty($data['optidash_url'])) {
           try {
-            $krakedFile = $this->httpClient->get($data['kraked_url']);
-            if ($krakedFile->getStatusCode() == 200) {
-              $this->fileSystem->saveData($krakedFile->getBody(), $image_uri, FileSystemInterface::EXISTS_REPLACE);
-              $this->logger->info('@file_name was successfully processed by Kraken.io.
-        Original size: @original_size; Kraked size: @kraked_size; Total saved:
+            $optidashedFile = $this->httpClient->get($data['optidash_url']);
+            if ($optidashedFile->getStatusCode() == 200) {
+              $this->fileSystem->saveData($optidashedFile->getBody(), $image_uri, FileSystemInterface::EXISTS_REPLACE);
+              $this->logger->info('@file_name was successfully processed by Optidash.ai.
+        Original size: @original_size; Optidash size: @optidash_size; Total saved:
         @saved_bytes. All figures in bytes', array(
                   '@file_name' => $image_uri,
                   '@original_size' => $data['original_size'],
-                  '@kraked_size' => $data['kraked_size'],
+                  '@optidash_size' => $data['optidash_size'],
                   '@saved_bytes' => $data['saved_bytes'],
                 )
               );
               return TRUE;
             }
           } catch (RequestException $e) {
-            $this->logger->error('Failed to download optimized image using Kraken.io due to "%error".', array('%error' => $e->getMessage()));
+            $this->logger->error('Failed to download optimized image using Optidash.ai due to "%error".', array('%error' => $e->getMessage()));
           }
         }
         else {
-          $this->logger->error('Kraken.io could not optimize the uploaded image.');
+          $this->logger->error('Optidash.ai could not optimize the uploaded image.');
         }
       }
       else {
-        $this->logger->error('Kraken API key or secret not set.');
+        $this->logger->error('Optidash API key or secret not set.');
       }
     }
     else {
-      $this->logger->error('Could not locate Kraken PHP library.');
+      $this->logger->error('Could not locate Optidash PHP library.');
     }
     return FALSE;
   }

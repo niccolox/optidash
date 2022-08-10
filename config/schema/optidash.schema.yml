@@ -1,13 +1,10 @@
 # Schema for configuration files of the ImageAPI Optimize module.
 
-imageapi_optimize.processor.kraken:
+imageapi_optimize.processor.optidash:
   type: mapping
   mapping:
     api_key:
       label: 'API Key'
-      type: string
-    api_secret:
-      label: 'API Secret'
       type: string
     lossy:
       label: 'Enable lossy compression'

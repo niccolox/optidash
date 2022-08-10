@@ -1,10 +1,27 @@
 {
-  "name": "drupal/kraken",
-  "description": "Optimize images using the Kraken.io webservice",
-  "type": "drupal-module",
-  "license": "GPL-2.0+",
-  "minimum-stability": "dev",
-  "require": {
-    "kraken-io/kraken-php": "^1.6"
+    "name": "drupal/optidash",
+    "description": "Optimize images using the Optidash.ai webservice",
+    "type": "drupal-module",
+    "license": "GPL-2.0+",
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "niccolox/optidash-php",
+                "version": "master",
+                "source": {
+                    "url": "https://github.com/niccolox/optidash-php.git",
+                    "type": "git",
+                    "reference": "master"
+                },
+                "autoload": {
+                    "classmap": ["lib"]
+                }                
+            }
+        }
+    ],    
+    "require": {
+        "niccolox/optidash-php": "master"
+    }
   }
-}

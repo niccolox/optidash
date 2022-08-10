@@ -7,10 +7,10 @@ CONTENTS OF THIS FILE
 
 INTRODUCTION
 ============
-This module allows image files to be optimised using the Kraken.io web service
-at http://kraken.io. After the initial configuration of a Kraken.io account, an
+This module allows image files to be optimised using the Optidash.ai web service
+at http://optidash.ai. After the initial configuration of a Optidash.ai account, an
 administrator of your site can then configure image optimize pipelines with the
-Kraken optimize processor.
+Optidash optimize processor.
 
 REQUIREMENTS
 ============
@@ -25,17 +25,17 @@ CONFIGURATION
 
 1. Create a new pipeline at /admin/config/media/imageapi-optimize-pipelines/add.
 
-2. Choose 'Kraken optimize' in the 'Select new processor' list and add it as a
+2. Choose 'Optidash optimize' in the 'Select new processor' list and add it as a
    processor.
 
-3. Enter the API details from your Kraken.io account.
+3. Enter the API details from your Optidash.ai account.
 
 4. Select lossy compression for smaller filesizes, if desired.
 
 5. Either change a single image style to use your new pipeline or change the
    sitewide default to use it at /admin/config/media/image-styles
 
-Read more about 'Working with images in Drupal 7 and 8, here:
+Read more about 'Working with images in Drupal 7, 8 & 9 here:
 
 https://drupal.org/documentation/modules/image
 
