@@ -1,5 +1,5 @@
 {
-    "name": "drupal/optidash",
+    "name": "niccolox/optidash",
     "description": "Optimize images using the Optidash.ai webservice",
     "type": "drupal-module",
     "license": "GPL-2.0+",
