@@ -1,7 +1,7 @@
 {
     "name": "niccolox/optidash",
     "description": "Optimize images using the Optidash.ai webservice",
-    "type": "drupal-module",
+    "type": "drupal-custom-module",
     "license": "GPL-2.0+",
     "minimum-stability": "dev",
     "repositories": [
@@ -17,10 +17,10 @@
                 },
                 "autoload": {
                     "classmap": ["lib"]
-                }                
+                }
             }
         }
-    ],    
+    ],
     "require": {
         "niccolox/optidash-php": "master"
     }

@@ -106,7 +106,7 @@ class optidash extends ConfigurableImageAPIOptimizeProcessorBase {
   public function getSummary() {
     $description = '';
 
-    if (!class_exists('\Optidash')) {
+    if (!class_exists("\\Optidash\\Optidash")) {
       $description .= $this->t('<strong>Very Sorry, Could not locate Optidash PHP library.</strong>');
     }
     else {
@@ -130,7 +130,7 @@ class optidash extends ConfigurableImageAPIOptimizeProcessorBase {
    * {@inheritdoc}
    */
   public function applyToImage($image_uri) {
-    
+
     if (class_exists('\Optidash')) {
       if (!empty($this->configuration['api_key']) && !empty($this->configuration['api_secret'])) {
         $optidash = new \Optidash($this->configuration['api_key']);
