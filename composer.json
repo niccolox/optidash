@@ -8,10 +8,10 @@
         {
             "type": "package",
             "package": {
-                "name": "niccolox/optidash-php",
+                "name": "optidash/optidash-php",
                 "version": "master",
                 "source": {
-                    "url": "https://github.com/niccolox/optidash-php.git",
+                    "url": "https://github.com/optidash/optidash-php.git",
                     "type": "git",
                     "reference": "master"
                 },
